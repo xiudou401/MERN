@@ -7,7 +7,7 @@ const {
   postWorkout,
   putWorkout,
   deleteWorkout,
-} = require('../controllers.js/workoutController');
+} = require('../controllers/workoutController');
 
 router.get('/', getWorkouts);
 router.get('/:id', getWorkout);
