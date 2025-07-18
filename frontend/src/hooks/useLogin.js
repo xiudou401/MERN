@@ -15,7 +15,7 @@ export const useLogin = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    const json = response.json();
+    const json = await response.json();
 
     if (!response.ok) {
       setIsLoading(false);
@@ -24,6 +24,7 @@ export const useLogin = () => {
     if (response.ok) {
       setIsLoading(false);
       dispatch({ type: 'LOGIN', payload: json });
+      localStorage.setItem('User', JSON.stringify(json));
     }
   };
   return { error, isLoading, login };
