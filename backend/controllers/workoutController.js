@@ -21,7 +21,6 @@ const getWorkout = async (req, res) => {
 };
 
 const postWorkout = async (req, res) => {
-  console.log('req.user:', req.user);
   const user_id = req.user._id;
   const { title, reps, load } = req.body;
   try {
