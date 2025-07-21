@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutContext } from '../hooks/useWorkoutContext';
 import WorkoutDetails from '../components/WorkoutDetails';
+import WorkoutForm from '../components/WorkoutForm';
 
 const Home = () => {
   const { user } = useAuthContext();
@@ -28,6 +29,7 @@ const Home = () => {
             <WorkoutDetails key={workout._id} {...workout} />
           ))}
       </div>
+      <WorkoutForm />
     </div>
   );
 };
