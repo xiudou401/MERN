@@ -5,6 +5,8 @@ const app = express();
 const mongoose = require('mongoose');
 const workouts = require('./routes/workoutRoute');
 
+app.use(express.json());
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
