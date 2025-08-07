@@ -27,7 +27,19 @@ const postWorkout = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-const putWorkout = async (req, res) => {};
+const putWorkout = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const workout = await Workout.findByIdAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true }
+    );
+    res.status(200).json(workout);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 const deleteWorkout = async (req, res) => {};
 
 module.exports = {
