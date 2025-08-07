@@ -13,4 +13,6 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.statics.signup = async function (email, password) {};
+
 module.exports = mongoose.model('User', userSchema);
