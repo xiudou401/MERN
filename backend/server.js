@@ -3,7 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const workouts = require('./routes/workoutRoute');
+
+const workoutRoute = require('./routes/workoutRoute');
+const userRoute = require('./routes/userRoute');
+
 
 app.use(express.json());
 
@@ -12,7 +15,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/workouts', workouts);
+
+app.use('/api/workouts', workoutRoute);
+app.use('/api/user', userRoute);
+
 
 mongoose
   .connect(process.env.MONGO_URI)
