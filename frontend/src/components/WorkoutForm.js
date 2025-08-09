@@ -6,6 +6,7 @@ const WorkoutForm = () => {
   const [title, setTitle] = useState('');
   const [reps, setReps] = useState('');
   const [load, setLoad] = useState('');
+  const [error, setError] = useState(null);
 
   const { user } = useAuthContext();
   const { dispatch } = useWorkoutContext();
@@ -21,7 +22,12 @@ const WorkoutForm = () => {
       body: JSON.stringify({ title, reps, load }),
     });
     const json = await res.json();
-    dispatch({ type: 'CREATE_WORKOUT', payload: json });
+    if (!res.ok) {
+      setError(json.error);
+    }
+    if (res.ok) {
+      dispatch({ type: 'CREATE_WORKOUT', payload: json });
+    }
   };
 
   return (
@@ -51,6 +57,7 @@ const WorkoutForm = () => {
         value={load}
       />
       <button>Add</button>
+      <span>{error}</span>
     </form>
   );
 };
