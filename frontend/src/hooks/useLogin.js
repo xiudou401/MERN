@@ -23,6 +23,7 @@ export const useLogin = () => {
     if (res.ok) {
       dispatch({ type: 'LOGIN', payload: json });
       setIsLoading(false);
+      localStorage.setItem('User', JSON.stringify(json));
     }
   };
   return { error, isLoading, login };
