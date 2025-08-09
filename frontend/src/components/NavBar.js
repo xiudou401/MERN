@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useWorkoutContext } from '../hooks/useWorkoutContext';
 
 const NavBar = () => {
   const { user, dispatch } = useAuthContext();
+  const { dispatch: WorkoutDispatch } = useWorkoutContext();
   const handleClick = () => {
     dispatch({ type: 'LOGOUT' });
+    localStorage.removeItem('User');
+    WorkoutDispatch({ type: 'SET_WORKOUTS', payload: null });
   };
   return (
     <div>

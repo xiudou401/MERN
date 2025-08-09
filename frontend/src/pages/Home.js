@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutContext } from '../hooks/useWorkoutContext';
 import WorkoutDetails from '../components/WorkoutDetails';
+import WorkoutForm from '../components/WorkoutForm';
 
 const Home = () => {
   const { workouts, dispatch } = useWorkoutContext();
@@ -27,6 +28,7 @@ const Home = () => {
         workouts.map((workout) => (
           <WorkoutDetails workout={workout} key={workout._id} />
         ))}
+      <WorkoutForm />
     </div>
   );
 };
