@@ -7,6 +7,7 @@ const WorkoutForm = () => {
   const [reps, setReps] = useState('');
   const [load, setLoad] = useState('');
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const { user } = useAuthContext();
   const { dispatch } = useWorkoutContext();
@@ -24,9 +25,12 @@ const WorkoutForm = () => {
     const json = await res.json();
     if (!res.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
     if (res.ok) {
       dispatch({ type: 'CREATE_WORKOUT', payload: json });
+      setEmptyFields([]);
+      setError(null);
     }
   };
 
@@ -39,6 +43,7 @@ const WorkoutForm = () => {
           setTitle(e.target.value);
         }}
         value={title}
+        className={emptyFields.includes('title') ? 'error' : ''}
       />
       <label>Reps:</label>
       <input
@@ -47,6 +52,7 @@ const WorkoutForm = () => {
           setReps(e.target.value);
         }}
         value={reps}
+        className={emptyFields.includes('reps') ? 'error' : ''}
       />
       <label>Load:</label>
       <input
@@ -55,6 +61,7 @@ const WorkoutForm = () => {
           setLoad(e.target.value);
         }}
         value={load}
+        className={emptyFields.includes('load') ? 'error' : ''}
       />
       <button>Add</button>
       <span>{error}</span>
