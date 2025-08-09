@@ -3,7 +3,10 @@ import { Link } from 'react-router';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const NavBar = () => {
-  const { user } = useAuthContext();
+  const { user, dispatch } = useAuthContext();
+  const handleClick = () => {
+    dispatch({ type: 'LOGOUT' });
+  };
   return (
     <div>
       <h1>Workout Buddy</h1>
@@ -11,7 +14,7 @@ const NavBar = () => {
         {user ? (
           <>
             <span>{user.email}</span>
-            <button>Logout</button>
+            <button onClick={handleClick}>Logout</button>
           </>
         ) : (
           <>
