@@ -13,7 +13,7 @@ export interface WorkoutContextValue extends WorkoutState {
 
 export const WorkoutContext = createContext<WorkoutContextValue>({
   workouts: [],
-  workoutDispatch: () => {},
+  workoutDispatch: (() => {}) as Dispatch<WorkoutAction>,
 });
 
 export const WorkoutReducer = (state: WorkoutState, action: WorkoutAction) => {

@@ -22,7 +22,7 @@ interface AuthContextProviderProps {
 }
 export const AuthContext = createContext<AuthContextValue>({
   user: null,
-  authDispatch: () => {},
+  authDispatch: (() => {}) as Dispatch<AuthAction>,
 });
 
 export const authReducer = (state: AuthState, action: AuthAction) => {

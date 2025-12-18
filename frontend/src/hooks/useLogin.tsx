@@ -5,9 +5,9 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { dispatch } = useAuthContext();
+  const { authDispatch } = useAuthContext();
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
     const res = await fetch('/api/user/login', {
@@ -21,7 +21,7 @@ export const useLogin = () => {
       setIsLoading(false);
     }
     if (res.ok) {
-      dispatch({ type: 'LOGIN', payload: json });
+      authDispatch({ type: 'LOGIN', payload: json });
       setIsLoading(false);
       localStorage.setItem('User', JSON.stringify(json));
     }
