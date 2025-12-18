@@ -1,11 +1,19 @@
 import React from 'react';
 import { useWorkoutContext } from '../hooks/useWorkoutContext';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { Workout } from '../types/workout';
 
-const WorkoutDetails = ({ workout }) => {
-  const { dispatch } = useWorkoutContext();
+interface WorkoutDetailsProps {
+  workout: Workout;
+}
+
+const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
+  const { workoutDispatch } = useWorkoutContext();
   const { user } = useAuthContext();
   const handleClick = async () => {
+    if (!user) {
+      return;
+    }
     const res = await fetch(`/api/workouts/${workout._id}`, {
       method: 'delete',
       headers: {
@@ -15,7 +23,7 @@ const WorkoutDetails = ({ workout }) => {
     const json = await res.json();
 
     if (res.ok) {
-      dispatch({ type: 'DELETE_WORKOUT', payload: json });
+      workoutDispatch({ type: 'DELETE_WORKOUT', payload: json });
     }
   };
 

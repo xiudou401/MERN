@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useWorkoutContext } from '../hooks/useWorkoutContext';
 
 const WorkoutForm = () => {
-  const [title, setTitle] = useState('');
-  const [reps, setReps] = useState('');
-  const [load, setLoad] = useState('');
-  const [error, setError] = useState(null);
-  const [emptyFields, setEmptyFields] = useState([]);
+  const [title, setTitle] = useState<string>('');
+  const [reps, setReps] = useState<number>(0);
+  const [load, setLoad] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+  const [emptyFields, setEmptyFields] = useState<string[]>([]);
 
   const { user } = useAuthContext();
-  const { dispatch } = useWorkoutContext();
+  const { workoutDispatch } = useWorkoutContext();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!user) {
+      setError('请先登录');
+      return;
+    }
     const res = await fetch('/api/workouts', {
       method: 'post',
       headers: {
@@ -28,7 +32,7 @@ const WorkoutForm = () => {
       setEmptyFields(json.emptyFields);
     }
     if (res.ok) {
-      dispatch({ type: 'CREATE_WORKOUT', payload: json });
+      workoutDispatch({ type: 'CREATE_WORKOUT', payload: json });
       setEmptyFields([]);
       setError(null);
     }
@@ -47,18 +51,18 @@ const WorkoutForm = () => {
       />
       <label>Reps:</label>
       <input
-        type="text"
+        type="number"
         onChange={(e) => {
-          setReps(e.target.value);
+          setReps(Number(e.target.value));
         }}
         value={reps}
         className={emptyFields.includes('reps') ? 'error' : ''}
       />
       <label>Load:</label>
       <input
-        type="text"
+        type="number"
         onChange={(e) => {
-          setLoad(e.target.value);
+          setLoad(Number(e.target.value));
         }}
         value={load}
         className={emptyFields.includes('load') ? 'error' : ''}

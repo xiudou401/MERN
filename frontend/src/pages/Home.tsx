@@ -5,10 +5,13 @@ import WorkoutDetails from '../components/WorkoutDetails';
 import WorkoutForm from '../components/WorkoutForm';
 
 const Home = () => {
-  const { workouts, dispatch } = useWorkoutContext();
+  const { workouts, workoutDispatch } = useWorkoutContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     const fetchData = async () => {
       const res = await fetch('/api/workouts', {
         method: 'get',
@@ -16,7 +19,7 @@ const Home = () => {
       });
       const json = await res.json();
 
-      dispatch({ type: 'SET_WORKOUTS', payload: json });
+      workoutDispatch({ type: 'SET_WORKOUTS', payload: json });
     };
 
     fetchData();
